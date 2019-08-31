@@ -56,6 +56,8 @@ function generateTitleLinks() {
   /* [DONE] for each article */
   const articles = document.querySelectorAll(optArticleSelector);
 
+  let html = "";
+
   for (let article of articles) {
     /* [DONE] get the article id */
     const articleId = article.getAttribute("id");
@@ -73,10 +75,16 @@ function generateTitleLinks() {
       articleTitle +
       "</span></a></li>";
     /* insert link into titleList */
-    // Inny sposob
+    // sposob 1:
     // titleList.innerHTML = titleList.innerHTML + linkHTML;
-    titleList.insertAdjacentHTML("beforebegin", linkHTML);
+    // sposob 2:
+    // titleList.insertAdjacentHTML("beforebegin", linkHTML);
+
+    /* insert link into html variable */
+    html = html + linkHTML;
   }
+
+  titleList.innerHTML = html;
 }
 
 generateTitleLinks();
