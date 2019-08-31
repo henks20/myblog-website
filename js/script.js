@@ -1,10 +1,10 @@
 "use strict";
 
-const links = document.querySelectorAll(".titles a");
+const optArticleSelector = ".post",
+  optTitleSelector = ".post-title",
+  optTitleListSelector = ".titles";
 
-for (let link of links) {
-  link.addEventListener("click", titleClickHandler);
-}
+generateTitleLinks();
 
 function titleClickHandler(event) {
   event.preventDefault();
@@ -44,10 +44,6 @@ function titleClickHandler(event) {
   targetArticle.classList.add("active");
 }
 
-const optArticleSelector = ".post",
-  optTitleSelector = ".post-title",
-  optTitleListSelector = ".titles";
-
 function generateTitleLinks() {
   /* [DONE] remove contents of titleList */
   const titleList = document.querySelector(optTitleListSelector);
@@ -74,17 +70,20 @@ function generateTitleLinks() {
       '"><span>' +
       articleTitle +
       "</span></a></li>";
-    /* insert link into titleList */
+    /* [DONE] insert link into titleList */
     // sposob 1:
     // titleList.innerHTML = titleList.innerHTML + linkHTML;
     // sposob 2:
     // titleList.insertAdjacentHTML("beforebegin", linkHTML);
 
-    /* insert link into html variable */
+    /* [DONE] insert link into html variable */
     html = html + linkHTML;
   }
 
   titleList.innerHTML = html;
-}
+  const links = document.querySelectorAll(".titles a");
 
-generateTitleLinks();
+  for (let link of links) {
+    link.addEventListener("click", titleClickHandler);
+  }
+}
