@@ -69,11 +69,11 @@ function calculateTagsParams(tags) {
 
   for (let tag in tags) {
     if (tags[tag] > params.max) {
-      params.max = tags[tag]
-    };
+      params.max = tags[tag];
+    }
     if (tags[tag] < params.min) {
-      params.min = tags[tag]
-    };
+      params.min = tags[tag];
+    }
   }
 
   return params;
@@ -97,7 +97,7 @@ function generateTags() {
     for (let tag of articleTagsArray) {
       const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li> ';
       html = html + linkHTML;
-      if (!allTags.hasOwnProperty(tag)) {
+      if (!{}.hasOwnProperty.call(allTags, tag)) {
         allTags[tag] = 1;
       } else {
         allTags[tag]++;
@@ -180,7 +180,7 @@ function generateAuthors() {
   for (let article of articles) {
     const wrapper = article.querySelector(opt.authorSelector);
     const articleAuthor = article.getAttribute('data-author');
-    if (!allAuthors.hasOwnProperty(articleAuthor)) {
+    if (!{}.hasOwnProperty.call(allAuthors, articleAuthor)) {
       allAuthors[articleAuthor] = 1;
     } else {
       allAuthors[articleAuthor]++;
@@ -223,7 +223,7 @@ function authorClickHandler(event) {
 
 function addClickListenersToAuthors() {
   const authors = document.querySelectorAll('.post-author a');
-  const authorsCloud = document.querySelectorAll('.authors a')
+  const authorsCloud = document.querySelectorAll('.authors a');
 
   for (let author of authors) {
     author.addEventListener('click', authorClickHandler);
