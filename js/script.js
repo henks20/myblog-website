@@ -1,14 +1,16 @@
 'use strict';
-const
-  optArticleSelector = '.post',
-  optTitleSelector = '.post-title',
-  optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags .list',
-  optAuthorSelector = '.post .post-author',
-  optTagsListSelector = '.tags.list',
-  optCloudClassCount = 5,
-  optCloudClassPrefix = 'tag-size-',
-  optAuthorsListSelector = '.authors.list';
+
+const opt = {
+  articleSelector: '.post',
+  titleSelector: '.post-title',
+  titleListSelector: '.titles',
+  articleTagsSelector: '.post-tags .list',
+  authorSelector: '.post .post-author',
+  tagsListSelector: '.tags.list',
+  cloudClassCount: 5,
+  cloudClassPrefix: 'tag-size-',
+  authorsListSelector: '.authors.list',
+};
 
 generateTitleLinks();
 generateTags();
@@ -39,14 +41,14 @@ function titleClickHandler(event) {
 }
 
 function generateTitleLinks(customSelector = '') {
-  const titleList = document.querySelector(optTitleListSelector);
+  const titleList = document.querySelector(opt.titleListSelector);
   titleList.innerHTML = '';
-  const articles = document.querySelectorAll(optArticleSelector + customSelector);
+  const articles = document.querySelectorAll(opt.articleSelector + customSelector);
   let html = '';
 
   for (let article of articles) {
     const articleId = article.getAttribute('id');
-    const articleTitle = article.querySelector(optTitleSelector).innerHTML;
+    const articleTitle = article.querySelector(opt.titleSelector).innerHTML;
     const linkHTML =
       '<li><a href="#' +
       articleId +
@@ -91,17 +93,17 @@ function calculateTagClass(count, params) {
   // const normalizedCount = count - params.min;
   // const normalizedMax = params.max - params.min;
   // const percentage = normalizedCount / normalizedMax;
-  // const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+  // const classNumber = Math.floor( percentage * (opt.cloudClassCount - 1) + 1 );
 
   // *** II sposób ***
   // classNumber = Math.floor( 0.5 * 5 + 1 );
-  // classNumber = Math.floor( 0.5 * optCloudClassCount + 1 );
-  // classNumber = Math.floor( ( 4 / 8 ) * optCloudClassCount + 1 );
-  // classNumber = Math.floor( ( (6 - 2) / (10 - 2) ) * optCloudClassCount + 1 );
-  // classNumber = Math.floor( ( (count - 2) / (10 - 2) ) * optCloudClassCount + 1 );
-  // classNumber = Math.floor( ( (count - 2) / (params.max - 2) ) * optCloudClassCount + 1 );
-  // classNumber = Math.floor( ( (count - params.min) / (params.max - 2) ) * optCloudClassCount + 1 );
-  return Math.floor(((count - params.min) / (params.max - params.min)) * optCloudClassCount + 1);
+  // classNumber = Math.floor( 0.5 * opt.cloudClassCount + 1 );
+  // classNumber = Math.floor( ( 4 / 8 ) * opt.cloudClassCount + 1 );
+  // classNumber = Math.floor( ( (6 - 2) / (10 - 2) ) * opt.cloudClassCount + 1 );
+  // classNumber = Math.floor( ( (count - 2) / (10 - 2) ) * opt.cloudClassCount + 1 );
+  // classNumber = Math.floor( ( (count - 2) / (params.max - 2) ) * opt.cloudClassCount + 1 );
+  // classNumber = Math.floor( ( (count - params.min) / (params.max - 2) ) * opt.cloudClassCount + 1 );
+  return Math.floor(((count - params.min) / (params.max - params.min)) * opt.cloudClassCount + 1);
 }
 
 
@@ -109,11 +111,11 @@ function generateTags() {
   /* [NEW] create a new variable allTags with an empty object */
   let allTags = {};
   /* find all articles */
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(opt.articleSelector);
   /* START LOOP: for every article: */
   for (let article of articles) {
     /* find tags wrapper */
-    const wrapper = article.querySelector(optArticleTagsSelector);
+    const wrapper = article.querySelector(opt.articleTagsSelector);
     /* make html variable with empty string */
     let html = '';
     /* get tags from data-tags attribute */
@@ -215,18 +217,18 @@ function calculateAuthorClass(count, params) {
   const normalizedCount = count - params.min;
   const normalizedMax = params.max - params.min;
   const percentage = normalizedCount / normalizedMax;
-  return Math.floor(percentage * (optCloudClassCount - 1) + 1);
+  return Math.floor(percentage * (opt.cloudClassCount - 1) + 1);
 }
 
 function generateAuthors() {
   /* [NEW] create a new variable allAuthors with an empty object */
   let allAuthors = {};
   /* find all articles */
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(opt.articleSelector);
   /* START LOOP: for every article: */
   for (let article of articles) {
     /* find tags wrapper */
-    const wrapper = article.querySelector(optAuthorSelector);
+    const wrapper = article.querySelector(opt.authorSelector);
     /* get tags from data-tags attribute */
     const articleAuthor = article.getAttribute('data-author');
     if (!allAuthors.hasOwnProperty(articleAuthor)) {
