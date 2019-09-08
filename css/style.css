@@ -134,4 +134,28 @@ body {
 .tag-size-6 {
   font-size: 1.6rem;
 }
+
+.author-size-1 {
+  font-size: 1.1rem;
+}
+
+.author-size-2 {
+  font-size: 1.2rem;
+}
+
+.author-size-3 {
+  font-size: 1.3rem;
+}
+
+.author-size-4 {
+  font-size: 1.4rem;
+}
+
+.author-size-5 {
+  font-size: 1.5rem;
+}
+
+.author-size-6 {
+  font-size: 1.6rem;
+}
 /*# sourceMappingURL=style.css.map */

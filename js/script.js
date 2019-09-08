@@ -1,6 +1,14 @@
 'use strict';
-const optArticleSelector = '.post', optTitleSelector = '.post-title', optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags .list', optAuthorSelector = '.post .post-author', optTagsListSelector = ".tags.list", optCloudClassCount = 5, optCloudClassPrefix = 'tag-size-';
+const
+  optArticleSelector = '.post',
+  optTitleSelector = '.post-title',
+  optTitleListSelector = '.titles',
+  optArticleTagsSelector = '.post-tags .list',
+  optAuthorSelector = '.post .post-author',
+  optTagsListSelector = '.tags.list',
+  optCloudClassCount = 5,
+  optCloudClassPrefix = 'tag-size-',
+  optAuthorsListSelector = '.authors.list';
 
 generateTitleLinks();
 generateTags();
@@ -191,7 +199,28 @@ function addClickListenersToTags() {
   }
 }
 
+function calculateAuthorsParams(authors) {
+  const params = {
+    max: 0,
+    min: 999999,
+  };
+  for (let author in authors) {
+    params.max = Math.max(authors[author], params.max);
+    params.min = Math.min(authors[author], params.min);
+  }
+  return params;
+}
+
+function calculateAuthorClass(count, params) {
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  return Math.floor(percentage * (optCloudClassCount - 1) + 1);
+}
+
 function generateAuthors() {
+  /* [NEW] create a new variable allAuthors with an empty object */
+  let allAuthors = {};
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
   /* START LOOP: for every article: */
@@ -200,11 +229,25 @@ function generateAuthors() {
     const wrapper = article.querySelector(optAuthorSelector);
     /* get tags from data-tags attribute */
     const articleAuthor = article.getAttribute('data-author');
+    if (!allAuthors.hasOwnProperty(articleAuthor)) {
+      /* [NEW] add tag to allTags object */
+      allAuthors[articleAuthor] = 1;
+    } else {
+      allAuthors[articleAuthor]++;
+    }
     const html = '<a href="#author-' + articleAuthor + '">by ' + articleAuthor + '</a>';
     /* insert HTML of all the links into the tags wrapper */
     wrapper.innerHTML = html;
     /* END LOOP: for every article: */
   }
+  let allAuthorsHTML = '';
+  const authorList = document.querySelector('.authors');
+  const authorsParams = calculateAuthorsParams(allAuthors);
+  for (let author in allAuthors) {
+    const authorLinkHTML = '<li class="author-size-' + calculateAuthorClass(allAuthors[author], authorsParams) + '"><a href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ') </a></li>';
+    allAuthorsHTML += authorLinkHTML;
+  }
+  authorList.innerHTML = allAuthorsHTML;
 }
 
 function authorClickHandler(event) {
@@ -239,11 +282,15 @@ function authorClickHandler(event) {
 function addClickListenersToAuthors() {
   /* find all links to tags */
   const authors = document.querySelectorAll('.post-author a');
+  const authorsCloud = document.querySelectorAll('.authors a')
   /* START LOOP: for each link */
   for (let author of authors) {
     /* add tagClickHandler as event listener for that link */
     author.addEventListener('click', authorClickHandler);
     /* END LOOP: for each link */
+  }
+  for (let author of authorsCloud) {
+    author.addEventListener('click', authorClickHandler);
   }
 }
 
