@@ -1,6 +1,6 @@
 'use strict';
 const optArticleSelector = '.post', optTitleSelector = '.post-title', optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags .list', optAuthorSelector = '.post .post-author';
+  optArticleTagsSelector = '.post-tags .list', optAuthorSelector = '.post .post-author', optTagsListSelector = ".tags.list";
 
 generateTitleLinks();
 generateTags();
@@ -26,7 +26,6 @@ function titleClickHandler(event) {
   }
 
   const hrefAttribute = clickedElement.getAttribute('href');
-  console.log('f', hrefAttribute);
   const targetArticle = document.querySelector(hrefAttribute);
   targetArticle.classList.add('active');
 }
@@ -35,7 +34,6 @@ function generateTitleLinks(customSelector = '') {
   const titleList = document.querySelector(optTitleListSelector);
   titleList.innerHTML = '';
   const articles = document.querySelectorAll(optArticleSelector + customSelector);
-  console.log(articles, customSelector);
   let html = '';
 
   for (let article of articles) {
@@ -58,6 +56,8 @@ function generateTitleLinks(customSelector = '') {
 }
 
 function generateTags() {
+  /* [NEW] create a new variable allTags with an empty array */
+  let allTags = [];
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
   /* START LOOP: for every article: */
@@ -76,12 +76,22 @@ function generateTags() {
       const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li> ';
       /* add generated code to html variable */
       html = html + linkHTML;
+      /* [NEW] check if this link is NOT already in allTags */
+      if (allTags.indexOf(linkHTML) == -1) {
+        /* [NEW] add generated code to allTags array */
+        allTags.push(linkHTML);
+      }
       /* END LOOP: for each tag */
     }
     /* insert HTML of all the links into the tags wrapper */
     wrapper.innerHTML = html;
     /* END LOOP: for every article: */
   }
+  /* [NEW] find list of tags in right column */
+  const tagList = document.querySelector('.tags');
+
+  /* [NEW] add html from allTags to tagList */
+  tagList.innerHTML = allTags.join(' ');
 }
 
 function tagClickHandler(event) {
