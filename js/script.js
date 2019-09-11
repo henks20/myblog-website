@@ -11,7 +11,6 @@ const opt = {
   cloudClassPrefix: 'tag-size-',
   authorsListSelector: '.authors.list',
 };
-/*eslint-disable */
 const templates = {
   articleLink: Handlebars.compile(document.querySelector('#article-link').innerHTML),
   tagLink: Handlebars.compile(document.querySelector('#tag-link').innerHTML),
@@ -19,7 +18,6 @@ const templates = {
   tagCloudLink: Handlebars.compile(document.querySelector('#tag-cloud-link').innerHTML),
   authorCloudLink: Handlebars.compile(document.querySelector('#author-cloud-link').innerHTML),
 };
-/*eslint-enable */
 
 generateTitleLinks();
 generateTags();
