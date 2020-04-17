@@ -1,6 +1,6 @@
-# Golden website
+# My-blog website
 
-Simple webiste using: 
+Simple website using: 
 * HTML
 * Sass
 * JavaScript (mostly).
